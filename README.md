@@ -97,7 +97,6 @@ rm -rf ./tmp
 cp AX6.config .config
 
 # 编译固件
-rm -rf ./tmp && rm -rf .config
 
 make download -j$(nproc)
 
