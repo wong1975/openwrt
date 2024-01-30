@@ -68,21 +68,28 @@ cd nss
 
 # 更新 Feeds
 ./scripts/feeds update -a
+
 ./scripts/feeds install -a
 
 # 删除&替换immortal面板及部分冲突默认软件
 rm -rf feeds/luci/modules/luci-base
+
 rm -rf feeds/luci/modules/luci-mod-status
+
 rm -rf feeds/packages/utils/coremark
+
 rm -rf feeds/packages/net/v2ray-geodata
+
 rm -rf feeds/nss-packages/utils/mhz
 
 svn export https://github.com/immortalwrt/luci/branches/master/modules/luci-base feeds/luci/modules/luci-base
+
 svn export https://github.com/immortalwrt/luci/branches/master/modules/luci-mod-status feeds/luci/modules/luci-mod-status
 
 rm -rf ./tmp
 
 ./scripts/feeds update -a
+
 ./scripts/feeds install -a
 
 # config file
@@ -90,7 +97,9 @@ cp AX6.config .config
 
 # 编译固件
 rm -rf ./tmp && rm -rf .config
+
 make download -j$(nproc)
+
 make -j$(nproc) || make -j1 V=s
 
 ### Related Repositories
