@@ -64,6 +64,7 @@ make4.1+ perl python3.7+ rsync subversion unzip which
 
 ## 本地编译详细步骤
 git clone https://github.com/TerryLip/AX6NSS.git nss
+
 cd nss
 
 # 更新 Feeds
