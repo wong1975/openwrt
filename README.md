@@ -87,6 +87,12 @@ svn export https://github.com/immortalwrt/luci/branches/master/modules/luci-base
 
 svn export https://github.com/immortalwrt/luci/branches/master/modules/luci-mod-status feeds/luci/modules/luci-mod-status
 
+复制immortalwrt两项时候，如果以上命令行无法下载，可以直接git 网站下载整个luci到本地，
+
+https://github.com/immortalwrt/luci
+
+右侧代码git下载zip压缩包，然后解压复制 luci-base&luci-mod-status两个目录到本地nss文件夹对应目录即可
+
 rm -rf ./tmp
 
 ./scripts/feeds update -a
