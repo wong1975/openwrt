@@ -1,4 +1,4 @@
-From 58c89e8768711a959fdc6e953df3ea2254ff93c1 Mon Sep 17 00:00:00 2001
+From b6e3ad4c0bb845a05d73ef1be46ffb73517d1565 Mon Sep 17 00:00:00 2001
 From: Syrone Wong <wong.syrone@gmail.com>
 Date: Sat, 9 Apr 2022 00:38:51 +0800
 Subject: [PATCH] nftables: add fullcone expression support
@@ -18,7 +18,7 @@ Signed-off-by: Syrone Wong <wong.syrone@gmail.com>
 +++ b/include/linux/netfilter/nf_tables.h
 @@ -1485,6 +1485,22 @@ enum nft_masq_attributes {
  #define NFTA_MASQ_MAX		(__NFTA_MASQ_MAX - 1)
-
+ 
  /**
 + * enum nft_fullcone_attributes - nf_tables fullcone expression attributes
 + *
@@ -48,13 +48,13 @@ Signed-off-by: Syrone Wong <wong.syrone@gmail.com>
 +	NFT_NAT_FULLCONE,
  	NFT_NAT_REDIR,
  };
-
+ 
 --- a/src/netlink_delinearize.c
 +++ b/src/netlink_delinearize.c
 @@ -1473,6 +1473,53 @@ out_err:
  	stmt_free(stmt);
  }
-
+ 
 +static void netlink_parse_fullcone(struct netlink_parse_ctx *ctx,
 +			       const struct location *loc,
 +			       const struct nftnl_expr *nle)
@@ -128,7 +128,7 @@ Signed-off-by: Syrone Wong <wong.syrone@gmail.com>
 +		break;
  	case NFT_NAT_REDIR:
  		nle = alloc_nft_expr("redir");
-
+ 
 --- a/src/parser_bison.y
 +++ b/src/parser_bison.y
 @@ -621,6 +621,7 @@ int nft_lex(void *, void *, void *);
@@ -206,3 +206,4 @@ Signed-off-by: Syrone Wong <wong.syrone@gmail.com>
 +		[NFT_NAT_FULLCONE] = "fullcone",
  		[NFT_NAT_REDIR]	= "redirect",
  	};
+ 
