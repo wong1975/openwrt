@@ -5,9 +5,9 @@ PKG_RELEASE:=5
 
 PKG_SOURCE_URL:=https://git.codelinaro.org/clo/qsdk/oss/lklm/qca-ssdk.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2023-11-30
-PKG_SOURCE_VERSION:=3153d9068a87198dabf1b8f2c80801fd31a493b3
-PKG_MIRROR_HASH:=05595ba16b22873f5b52609a0ba316ee5264d7fe4ed5b2fb9198da7fe43e4a08
+PKG_SOURCE_DATE:=2023-10-04
+PKG_SOURCE_VERSION:=23a5aa4a4d5834da7a07efb58baebfbee91786b0
+PKG_MIRROR_HASH:=9d169ce924a46a4e530031061d3183b92f23c7f46b3106f0b9ba3587846a73ee
 
 PKG_FLAGS:=nonshared
 PKG_BUILD_PARALLEL:=1
@@ -22,7 +22,7 @@ define KernelPackage/qca-ssdk
   SUBMENU:=Network Devices
   TITLE:=Qualcom SSDK switch driver
   DEPENDS:=@(TARGET_qualcommax)
-  FILES:=$(PKG_BUILD_DIR)/build/bin/qca-ssdk.ko
+  FILES:=$(PKG_BUILD_DIR)/qca-ssdk.ko
   AUTOLOAD:=$(call AutoLoad,30,qca-ssdk)
 endef
 
@@ -32,7 +32,7 @@ endef
 
 GCC_VERSION=$(shell echo "$(CONFIG_GCC_VERSION)" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
-LNX_CONFIG_OPTS = LNX_MAKEOPTS='$(KERNEL_MAKEOPTS)' MODULE_TYPE=KSLIB modules
+LNX_CONFIG_OPTS = LNX_MAKEOPTS='$(KERNEL_MAKEOPTS)' PRJ_PATH=$(PKG_BUILD_DIR) MODULE_TYPE=KSLIB modules
 
 MAKE_FLAGS+= \
 	TARGET_NAME=$(CONFIG_TARGET_NAME) \
@@ -54,13 +54,13 @@ ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq807x")
     MAKE_FLAGS+= CHIP_TYPE=HPPE
 endif
 
-
 ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq60xx")
     MAKE_FLAGS+= CHIP_TYPE=CPPE
 endif
 
+
 define Build/Compile
-	+$(MAKE) $(MAKE_FLAGS) -C $(PKG_BUILD_DIR) $(LNX_CONFIG_OPTS)
+	+$(MAKE) $(PKG_JOBS) $(MAKE_FLAGS) -C $(PKG_BUILD_DIR) $(LNX_CONFIG_OPTS)
 endef
 
 define Build/InstallDev
