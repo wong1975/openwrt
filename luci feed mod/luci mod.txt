@@ -11,5 +11,5 @@ wireless.js  add mu-mimo setting in luci wireless
 
 system.js add lz4hc compress method select/setup for zram in luci system setting
 
-Reference of copy thes files to the correspond fold in feed
+Reference or copy these files to the correspond folder in your feeds folder and replace, then take effect after compile
 
