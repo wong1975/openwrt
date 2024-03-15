@@ -50,7 +50,17 @@ return baseclass.extend({
 			L.resolveDefault(callCPUUsage(), {}),
 			L.resolveDefault(callTempInfo(), {}),
 			L.resolveDefault(callLuciVersion(), { revision: _('unknown version'), branch: 'LuCI' }),
-			fs.exec_direct('awk',[ '/%/{printf "Avg: %s Max: %s",$2,$3}', '/sys/kernel/debug/qca-nss-drv/stats/cpu_load_ubi'])
+			fs.lines('/sys/kernel/debug/qca-nss-drv/stats/cpu_load_ubi').then(L.bind(function(lines) {
+			  var stats = [];
+			  for (var i = 0; i < lines.length; i++) {
+				  if (lines[i].match(/%/)) {
+					var stat = lines[i].split(/\s+/);
+					stats['avg'] = stat[1];
+					stats['max'] = stat[2];
+					return stats;
+				  }
+			  }
+			}))
 		]);
 	},
 
@@ -96,7 +106,7 @@ return baseclass.extend({
 				systeminfo.load[2] / 65535.0
 			) : null,
 			_('CPU usage (%)'),    cpuusage.cpuusage,
-			_('NSS Load'),         nssinfo
+			_('NSS Load'),         (L.isObject(nssinfo) ? 'Avg: %s Max: %s'.format(nssinfo.avg, nssinfo.max) : null)
 		];
 
 		if (tempinfo.tempinfo) {
