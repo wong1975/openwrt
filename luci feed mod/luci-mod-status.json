@@ -31,7 +31,7 @@
 		"read": {
 			"cgi-io": [ "exec" ],
 			"file": {
-				"/sys/kernel/debug/qca-nss-drv/stats/cpu_load_ubi": [ "read" ],
+				"/usr/bin/awk": [ "exec" ],
 				"/bin/dmesg -r": [ "exec" ],
 				"/sbin/logread": [ "stat" ],
 				"/sbin/logread -e ^": [ "exec" ],
