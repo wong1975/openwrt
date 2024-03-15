@@ -1,0 +1,24 @@
+Custom mod in Luci:
+
+
+feeds/luci/modules/luci-mod-network/htdocs/luci-static/resources/view/wireless.js
+
+wireless.js  add mu-mimo setting in luci wireless
+
+
+
+feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+
+feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json
+
+
+10_system.js/luci-mod-status.json  add nss load info at luci status summary page
+
+
+
+feeds/luci/modules/luci-mod-system/htdocs/luci-static/resources/view/system/system.js
+
+system.js add lz4hc compress method select/setup for zram in luci system setting
+
+Reference or copy these files to the correspond folder in your feeds folder and replace, then take effect after compile
+
