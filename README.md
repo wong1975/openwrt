@@ -81,6 +81,7 @@ rm -rf feeds/packages/utils/coremark
 
 rm -rf feeds/packages/net/v2ray-geodata
 
+rm -rf feeds/nss-packages/utils/mhz
 
 svn export https://github.com/immortalwrt/luci/branches/master/modules/luci-base feeds/luci/modules/luci-base
 
