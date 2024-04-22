@@ -952,7 +952,7 @@ return view.extend({
 
 					o = ss.taboption('advanced', form.Flag, 'mu_beamformer', _('MU-MIMO'));
 					o.default = o.disabled;
-
+					
 					o = ss.taboption('advanced', form.Value, 'distance', _('Distance Optimization'), _('Distance to farthest network member in meters. Set only for distances above one kilometer; otherwise it is harmful.'));
 					o.datatype = 'or(range(0,114750),"auto")';
 					o.placeholder = 'auto';
@@ -970,7 +970,7 @@ return view.extend({
 
 					o = ss.taboption('advanced', form.Flag, 'vendor_vht', _('Enable 256-QAM'), _('802.11n 2.4Ghz Only'));
 					o.default = o.disabled;
-
+					
 					o = ss.taboption('advanced', form.Value, 'beacon_int', _('Beacon Interval'));
 					o.datatype = 'range(15,65535)';
 					o.placeholder = 100;
@@ -1579,7 +1579,6 @@ return view.extend({
 
 
 				if (hwtype == 'mac80211') {
-
 					// Probe 802.11r support (and EAP support as a proxy for Openwrt)
 					var has_80211r = L.hasSystemFeature('hostapd', '11r') || L.hasSystemFeature('hostapd', 'eap');
 
@@ -2037,6 +2036,26 @@ return view.extend({
 					uci.unset('wireless', radioDev.getName(), 'disabled');
 				}
 
+				var htmodes = radioDev.getHTModes();
+
+				if (bss.vht_operation && htmodes && htmodes.indexOf('VHT20') !== -1) {
+					for (var w = bss.vht_operation.channel_width; w >= 20; w /= 2) {
+						if (htmodes.indexOf('VHT'+w) !== -1) {
+							uci.set('wireless', radioDev.getName(), 'htmode', 'VHT'+w);
+							break;
+						}
+					}
+				}
+				else if (bss.ht_operation && htmodes && htmodes.indexOf('HT20') !== -1) {
+					var w = (bss.ht_operation.secondary_channel_offset == 'no secondary') ? 20 : 40;
+					uci.set('wireless', radioDev.getName(), 'htmode', 'HT'+w);
+				}
+				else {
+					uci.remove('wireless', radioDev.getName(), 'htmode');
+				}
+
+				uci.set('wireless', radioDev.getName(), 'channel', bss.channel);
+
 				section_id = next_free_sid(wifi_sections.length);
 
 				uci.add('wireless', 'wifi-iface', section_id);
@@ -2192,7 +2211,7 @@ return view.extend({
 			uci.add('wireless', 'wifi-iface', section_id);
 			uci.set('wireless', section_id, 'device', radioDev.getName());
 			uci.set('wireless', section_id, 'mode', 'ap');
-			uci.set('wireless', section_id, 'ssid', 'ImmortalWrt');
+			uci.set('wireless', section_id, 'ssid', 'OpenWrt');
 			uci.set('wireless', section_id, 'encryption', 'none');
 
 			this.addedSection = section_id;
