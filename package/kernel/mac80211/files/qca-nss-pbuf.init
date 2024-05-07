@@ -112,6 +112,7 @@ apply_nss_config() {
     compex,wpq873 | \
     linksys,mx4200v1 | \
     redmi,ax6 | \
+    redmi,ax6-stock | \
     xiaomi,ax3600 | \
     zte,mf269 | \
     512m*)
