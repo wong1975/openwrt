@@ -60,8 +60,8 @@ apply_nss_config() {
 
   config_load     pbuf
   config_get_bool auto_scale            opt auto_scale            0
-  config_get      n2h_queue_limit_core0 opt n2h_queue_limit_core0 1024
-  config_get      n2h_queue_limit_core1 opt n2h_queue_limit_core1 1024
+  config_get      n2h_queue_limit_core0 opt n2h_queue_limit_core0 2048
+  config_get      n2h_queue_limit_core1 opt n2h_queue_limit_core1 2048
 
   sysctl -w dev.nss.clock.auto_scale="$auto_scale" > /dev/null 2>&1
 
