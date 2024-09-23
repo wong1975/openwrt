@@ -80,7 +80,7 @@ function render_signal_badge(signalPercent, signalValue, noiseValue, wrap, mode)
 		}
 
 		if (noiseValue != null && noiseValue != 0) {
-			value = '---/%d\x0a%s'.format(noiseValue, _('dBm'));
+			value = '---/%d\xa0%s'.format(noiseValue, _('dBm'));
 			title = '%s / %s: %d %s'.format(title, _('Noise'), noiseValue, _('dBm'));
 		}
 		else {
@@ -970,7 +970,7 @@ return view.extend({
 
 					o = ss.taboption('advanced', form.Flag, 'vendor_vht', _('Enable 256-QAM'), _('802.11n 2.4Ghz Only'));
 					o.default = o.disabled;
-
+					
 					o = ss.taboption('advanced', form.Value, 'beacon_int', _('Beacon Interval'));
 					o.datatype = 'range(15,65535)';
 					o.placeholder = 100;
@@ -1847,6 +1847,27 @@ return view.extend({
 						o.datatype = 'uinteger';
 						o.placeholder = '201';
 						o.rmempty = true;
+
+						if (L.hasSystemFeature('hostapd', 'ocv') || L.hasSystemFeature('wpasupplicant', 'ocv')) {
+							o = ss.taboption('encryption', form.ListValue, 'ocv', _('Operating Channel Validation'), _("Note: Workaround mode allows a STA that claims OCV capability to connect even if the STA doesn't send OCI or negotiate PMF."));
+							o.value('0', _('Disabled'));
+							o.value('1', _('Enabled'));
+							o.value('2', _('Enabled (workaround mode)'));
+							o.default = '0';
+							o.depends('ieee80211w', '1');
+							o.depends('ieee80211w', '2');
+
+							o.validate = function(section_id, value) {
+								var modeopt = this.section.children.filter(function(o) { return o.option == 'mode' })[0],
+								modeval = modeopt.formvalue(section_id);
+
+								if ((value == '2') && ((modeval == 'sta') || (modeval == 'sta-wds'))) {
+									return _('Workaround mode can only be used when acting as an access point.');
+								}
+
+								return true;
+							}
+						}
 
 						o = ss.taboption('encryption', form.Flag, 'wpa_disable_eapol_key_retries', _('Enable key reinstallation (KRACK) countermeasures'), _('Complicates key reinstallation attacks on the client side by disabling retransmission of EAPOL-Key frames that are used to install keys. This workaround might cause interoperability issues and reduced robustness of key negotiation especially in environments with heavy traffic load.'));
 						add_dependency_permutations(o, { mode: ['ap', 'ap-wds'], encryption: ['psk2', 'psk-mixed', 'sae', 'sae-mixed', 'wpa2', 'wpa3', 'wpa3-mixed'] });
