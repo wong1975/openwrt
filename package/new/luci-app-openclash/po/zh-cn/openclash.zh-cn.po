@@ -2871,20 +2871,11 @@ msgstr "（仅 TUN 内核）"
 msgid "(TUN&Meta Core)"
 msgstr "（TUN&Meta 内核）"
 
-msgid "Will Override Dns Queries If Domains in The List"
-msgstr "列表中的域名将会强制进行探测（嗅探）"
-
-msgid "Will Disable Sniffing If Domains(sni) in The List"
-msgstr "列表中的域名（sni）不会进行探测（嗅探）"
-
-msgid "Will Only Sniffing If Ports in The List"
-msgstr "仅探测（嗅探）列表中指定的协议端口"
-
 msgid "Custom Sniffer Settings"
 msgstr "自定义流量探测（嗅探）设置"
 
 msgid "Custom The Force and Skip Sniffing Doamin Lists"
-msgstr "自定义强制和忽略流量探测（嗅探）的域名列表"
+msgstr "自定义强制和忽略流量探测（嗅探）的域名列表等"
 
 msgid "Enable Tcp Concurrent"
 msgstr "*启用 TCP 并发"
@@ -3036,8 +3027,8 @@ msgstr "绕过指定区域 IPv6 黑名单"
 msgid "Domains or IPs in The List Will Not be Affected by The China IP Route Option, Depend on Dnsmasq"
 msgstr "列表中的域名或 IP 将不会受到绕过指定区域 IP 选项的影响，此功能依赖于 Dnsmasq"
 
-msgid "Warning: You May Need to Turn off The Rebinding Protection Option of Dnsmasq When Hosts Has Set a Reserved Address"
-msgstr "警告：Hosts 设置了保留地址时需要关闭 Dnsmasq 的重绑定保护选项才能生效"
+msgid "Warning: You May Need to Turn off The Rebinding Protection Option of Dnsmasq When Hosts Has Set a Reserved Address..."
+msgstr "警告：Hosts 设置了保留地址时需要关闭 Dnsmasq 的重绑定保护选项才能生效..."
 
 msgid "Auto Select Logic"
 msgstr "*自动选择逻辑"
