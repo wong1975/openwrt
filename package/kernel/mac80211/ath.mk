@@ -374,9 +374,11 @@ define KernelPackage/ath11k/config
                	 TARGET_qualcommax_ipq807x_DEVICE_compex_wpq873 || \
                	 TARGET_qualcommax_ipq807x_DEVICE_linksys_mx4200v1 || \
                	 TARGET_qualcommax_ipq807x_DEVICE_redmi_ax6 || \
+               	 TARGET_qualcommax_ipq807x_DEVICE_redmi_ax6-stock || \
                	 TARGET_qualcommax_ipq807x_DEVICE_xiaomi_ax3600 || \
                	 TARGET_qualcommax_ipq807x_DEVICE_zte_mf269 )
                select ATH11K_MEM_PROFILE_256M if TARGET_qualcommax_ipq807x_DEVICE_netgear_wax218
+               select PACKAGE_kmod-qca-nss-ecm
                default y
                help
                   Say Y to enable NSS WiFi offload support. Ensure you enable feeds for NSS drivers.
