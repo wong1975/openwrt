@@ -214,6 +214,7 @@ return view.extend({
 			o.optional    = true;
 			o.default     = 'lz4hc';
 			o.value('lzo', 'lzo');
+			o.value('lzo-rle', 'lzo-rle');
 			o.value('lz4', 'lz4');
 			o.value('lz4hc', 'lz4hc');
 			o.value('zstd', 'zstd');

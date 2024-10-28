@@ -62,7 +62,6 @@ CONFIG_TARGET_qualcommax_ipq807x=y
 # CONFIG_TARGET_qualcommax_ipq807x_DEVICE_prpl_haze is not set
 # CONFIG_TARGET_qualcommax_ipq807x_DEVICE_qnap_301w is not set
 # CONFIG_TARGET_qualcommax_ipq807x_DEVICE_redmi_ax6 is not set
-CONFIG_TARGET_qualcommax_ipq807x_DEVICE_redmi_ax6-stock=y
 # CONFIG_TARGET_qualcommax_ipq807x_DEVICE_spectrum_sax1v1k is not set
 # CONFIG_TARGET_qualcommax_ipq807x_DEVICE_xiaomi_ax3600 is not set
 # CONFIG_TARGET_qualcommax_ipq807x_DEVICE_xiaomi_ax9000 is not set
@@ -177,7 +176,7 @@ CONFIG_PACKAGE_luci-app-opkg=y
 #           This is essential to test WiFi speeds,
 #           as posting speedtest.net results is useless
 #           without knowing the network conditions.
-CONFIG_PACKAGE_iperf3=n
+CONFIG_PACKAGE_iperf3=y
 
 # --- Optional Packages --- #
 
@@ -192,24 +191,24 @@ CONFIG_PACKAGE_iperf3=n
 # - SQM: Smart Queue Management for bufferbloat control.
 CONFIG_PACKAGE_luci-app-sqm=y
 # - Statistics: Monitor your router’s performance (CPU, memory, bandwidth).
-CONFIG_PACKAGE_luci-app-statistics=n
+CONFIG_PACKAGE_luci-app-statistics=y
 # - ACME: Automated SSL cert management. If you want to access your router via HTTPS and have a domain.
-CONFIG_PACKAGE_luci-app-acme=n
+CONFIG_PACKAGE_luci-app-acme=y
 # - Watchcat: Automate reboots on connection loss.
-CONFIG_PACKAGE_luci-app-watchcat=n
+CONFIG_PACKAGE_luci-app-watchcat=y
 # - WireGuard: VPN support. Will also select the kernel module.
-CONFIG_PACKAGE_luci-proto-wireguard=n
+CONFIG_PACKAGE_luci-proto-wireguard=y
 # - NLBWMon: Network usage monitoring to track bandwidth by host.
-CONFIG_PACKAGE_luci-app-nlbwmon=n
+CONFIG_PACKAGE_luci-app-nlbwmon=y
 
 #####################################################################
 # Kernel Modules
 #####################################################################
 # Filesystem support for USB storage:
 # FAT32: Useful to load recovery or new images that can be booted by u-boot
-CONFIG_PACKAGE_kmod-fs-vfat=n
+CONFIG_PACKAGE_kmod-fs-vfat=y
 # NTFS: Mostly useful for Windows users.
-CONFIG_PACKAGE_kmod-fs-ntfs3=n
+CONFIG_PACKAGE_kmod-fs-ntfs3=y
 
 # Network
 # Bridge module support for working with nftables for more complex firewall setups.
@@ -217,13 +216,13 @@ CONFIG_PACKAGE_kmod-nft-bridge=y
 
 # USB Storage
 # NOTE: Not all IPQ807x devices have USB ports, so this is optional.
-CONFIG_PACKAGE_kmod-usb-storage=n
+CONFIG_PACKAGE_kmod-usb-storage=y
 
 # Logging/Debugging
 
 # ramoops: kernel module that logs crashes to RAM which can be read after a reboot.
 # Check '/sys/fs/pstore' for logs after a crash.
-CONFIG_PACKAGE_kmod-ramoops=n
+CONFIG_PACKAGE_kmod-ramoops=y
 
 #####################################################################
 # Packages
@@ -234,9 +233,9 @@ CONFIG_PACKAGE_curl=y
 CONFIG_LIBCURL_OPENSSL=y
 CONFIG_LIBCURL_MBEDTLS=n
 # - rsync: Efficient file transfers and backups.
-CONFIG_PACKAGE_rsync=n
+CONFIG_PACKAGE_rsync=y
 # - jq: Parse JSON data from the command line. Useful for scripting, and WAY better than `jsonfilter`.
-CONFIG_PACKAGE_jq=n
+CONFIG_PACKAGE_jq=y
 # - pigz: Parallel gzip for faster compression.
 CONFIG_PACKAGE_pigz=y
 # - tar: Archiving utility. The default busybox tar is very limited.
