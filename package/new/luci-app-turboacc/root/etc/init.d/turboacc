@@ -79,9 +79,9 @@ start(){
 	}
 
 	if [ "${bbr_cca}" -eq "1" ];  then
-		sysctl -w net.ipv4.tcp_congestion_control="bbr"
+		sysctl -w net.ipv4.tcp_congestion_control=bbr
 	else
-		sysctl -w net.ipv4.tcp_congestion_control="cubic"
+		sysctl -w net.ipv4.tcp_congestion_control=cubic
 	fi
 
 	if [ "${restart_utils}" = "true" ]; then
