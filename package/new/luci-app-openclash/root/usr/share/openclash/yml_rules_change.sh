@@ -315,15 +315,15 @@ yml_other_set()
          Value['script']=Value_1['script'];
          Value['rules']=Value_1['rules'];
          Value['rules'].to_a.collect!{|x|
-         x.to_s.gsub(/,[\s]?Bilibili,[\s]?Asian TV$/, ', Bilibili, $Bilibili#delete_')
-         .gsub(/,[\s]?Bahamut,[\s]?Global TV$/, ', Bahamut, $Bahamut#delete_')
-         .gsub(/,[\s]?HBO Max,[\s]?Global TV$/, ', HBO Max, $HBOMax#delete_')
-         .gsub(/,[\s]?HBO Go,[\s]?Global TV$/, ', HBO Go, $HBOGo#delete_')
+         x.to_s.gsub(/,[\s]?Bilibili,[\s]?CN Mainland TV$/, ', Bilibili, $Bilibili#delete_')
+         .gsub(/,[\s]?Bahamut,[\s]?Asian TV$/, ', Bahamut, $Bahamut#delete_')
+         .gsub(/,[\s]?Max,[\s]?Max$/, ', Max, $HBOMax#delete_')
          .gsub(/,[\s]?Discovery Plus,[\s]?Global TV$/, ', Discovery Plus, $Discovery#delete_')
          .gsub(/,[\s]?DAZN,[\s]?Global TV$/, ', DAZN, $DAZN#delete_')
          .gsub(/,[\s]?Pornhub,[\s]?Global TV$/, ', Pornhub, $Pornhub#delete_')
          .gsub(/,[\s]?Global TV$/, ', $GlobalTV#delete_')
          .gsub(/,[\s]?Asian TV$/, ', $AsianTV#delete_')
+         .gsub(/,[\s]?CN Mainland TV$/, ', $MainlandTV#delete_')
          .gsub(/,[\s]?Proxy$/, ', $Proxy#delete_')
          .gsub(/,[\s]?YouTube$/, ', $Youtube#delete_')
          .gsub(/,[\s]?Apple$/, ', $Apple#delete_')
@@ -336,6 +336,7 @@ yml_other_set()
          .gsub(/,[\s]?Steam$/, ', $Steam#delete_')
          .gsub(/,[\s]?miHoYo$/, ', $miHoYo#delete_')
          .gsub(/,[\s]?AdBlock$/, ', $AdBlock#delete_')
+         .gsub(/,[\s]?HTTPDNS$/, ', $HTTPDNS#delete_')
          .gsub(/,[\s]?Speedtest$/, ', $Speedtest#delete_')
          .gsub(/,[\s]?Telegram$/, ', $Telegram#delete_')
          .gsub(/,[\s]?Crypto$/, ', $Crypto#delete_')
@@ -347,15 +348,15 @@ yml_other_set()
          .gsub(/,[\s]?Google FCM$/, ', $GoogleFCM#delete_')
          .gsub(/#delete_/, '')
          };
-         Value['script']['code'].to_s.gsub!(/\'Bilibili\': \'Asian TV\'/,'\'Bilibili\': \'$Bilibili#delete_\'')
-         .gsub!(/\'Bahamut\': \'Global TV\'/,'\'Bahamut\': \'$Bahamut#delete_\'')
-         .gsub!(/\'HBO Max\': \'Global TV\'/,'\'HBO Max\': \'$HBOMax#delete_\'')
-         .gsub!(/\'HBO Go\': \'Global TV\'/,'\'HBO Go\': \'$HBOGo#delete_\'')
+         Value['script']['code'].to_s.gsub!(/\'Bilibili\': \'CN Mainland TV\'/,'\'Bilibili\': \'$Bilibili#delete_\'')
+         .gsub!(/\'Bahamut\': \'Asian TV\'/,'\'Bahamut\': \'$Bahamut#delete_\'')
+         .gsub!(/\'Max\': \'Max\'/,'\'Max\': \'$HBOMax#delete_\'')
          .gsub!(/\'Discovery Plus\': \'Global TV\'/,'\'Discovery Plus\': \'$Discovery#delete_\'')
          .gsub!(/\'DAZN\': \'Global TV\'/,'\'DAZN\': \'$DAZN#delete_\'')
          .gsub!(/\'Pornhub\': \'Global TV\'/,'\'Pornhub\': \'$Pornhub#delete_\'')
          .gsub!(/: \'Global TV\'/,': \'$GlobalTV#delete_\'')
          .gsub!(/: \'Asian TV\'/,': \'$AsianTV#delete_\'')
+         .gsub!(/: \'CN Mainland TV\'/,': \'$MainlandTV#delete_\'')
          .gsub!(/: \'Proxy\'/,': \'$Proxy#delete_\'')
          .gsub!(/: \'YouTube\'/,': \'$Youtube#delete_\'')
          .gsub!(/: \'Apple\'/,': \'$Apple#delete_\'')
@@ -368,6 +369,7 @@ yml_other_set()
          .gsub!(/: \'Steam\'/,': \'$Steam#delete_\'')
          .gsub!(/: \'miHoYo\'/,': \'$miHoYo#delete_\'')
          .gsub!(/: \'AdBlock\'/,': \'$AdBlock#delete_\'')
+         .gsub!(/: \'HTTPDNS\'/,': \'$HTTPDNS#delete_\'')
          .gsub!(/: \'Speedtest\'/,': \'$Speedtest#delete_\'')
          .gsub!(/: \'Telegram\'/,': \'$Telegram#delete_\'')
          .gsub!(/: \'Crypto\'/,': \'$Crypto#delete_\'')
@@ -871,12 +873,12 @@ yml_other_rules_get()
    config_get "rule_name" "$section" "rule_name" ""
    config_get "GlobalTV" "$section" "GlobalTV" ""
    config_get "AsianTV" "$section" "AsianTV" ""
+   config_get "MainlandTV" "$section" "MainlandTV" "DIRECT"
    config_get "Proxy" "$section" "Proxy" ""
    config_get "Youtube" "$section" "Youtube" ""
    config_get "Bilibili" "$section" "Bilibili" ""
    config_get "Bahamut" "$section" "Bahamut" ""
    config_get "HBOMax" "$section" "HBOMax" "$GlobalTV"
-   config_get "HBOGo" "$section" "HBOGo" "$GlobalTV"
    config_get "Pornhub" "$section" "Pornhub" ""
    config_get "Apple" "$section" "Apple" ""
    config_get "Scholar" "$section" "Scholar" ""
@@ -885,6 +887,7 @@ yml_other_rules_get()
    config_get "Spotify" "$section" "Spotify" ""
    config_get "Steam" "$section" "Steam" ""
    config_get "AdBlock" "$section" "AdBlock" ""
+   config_get "HTTPDNS" "$section" "HTTPDNS" "REJECT"
    config_get "Netease_Music" "$section" "Netease_Music" ""
    config_get "Speedtest" "$section" "Speedtest" ""
    config_get "Telegram" "$section" "Telegram" ""
@@ -918,12 +921,12 @@ if [ "$1" != "0" ]; then
    elif [ "$rule_name" = "lhie1" ]; then
        if [ -z "$(grep -F "$GlobalTV" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$AsianTV" /tmp/Proxy_Group)" ]\
+    || [ -z "$(grep -F "$MainlandTV" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$Proxy" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$Youtube" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$Bilibili" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$Bahamut" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$HBOMax" /tmp/Proxy_Group)" ]\
-    || [ -z "$(grep -F "$HBOGo" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$Pornhub" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$Apple" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$AppleTV" /tmp/Proxy_Group)" ]\
@@ -937,6 +940,7 @@ if [ "$1" != "0" ]; then
     || [ -z "$(grep -F "$Steam" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$miHoYo" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$AdBlock" /tmp/Proxy_Group)" ]\
+    || [ -z "$(grep -F "$HTTPDNS" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$Speedtest" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$Telegram" /tmp/Proxy_Group)" ]\
     || [ -z "$(grep -F "$Crypto" /tmp/Proxy_Group)" ]\
