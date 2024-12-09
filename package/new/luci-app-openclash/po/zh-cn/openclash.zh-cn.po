@@ -2298,9 +2298,6 @@ msgstr "错误：设置自定义规则失败，"
 msgid "Error: Set BT/P2P DIRECT Rules Failed,"
 msgstr "错误：设置仅代理命中规则流量（BT/P2P直连）失败，"
 
-msgid "Error: Set Loop Protect Rules Failed,"
-msgstr "错误：设置防回环规则失败，"
-
 msgid "Error: Set lhie1 Rules Failed,"
 msgstr "错误：设置第三方规则（lhie1）失败，"
 
@@ -3051,6 +3048,9 @@ msgstr "警告：TUN 接口启动失败，请检查依赖情况或稍后重试�
 msgid "Warning: TUN Interface Start Failed, Try to Restart Again..."
 msgstr "警告：TUN 接口启动失败，尝试重启内核..."
 
+msgid "Error: Core Start Failed, Please Check The Log Infos!"
+msgstr "错误：内核启动失败，请查看《内核日志》排查失败原因！"
+
 msgid "Forced Sniff Pure IP Connections"
 msgstr "强制探测（嗅探）所有纯 IP 的连接"
 
@@ -3428,3 +3428,6 @@ msgstr "直连"
 
 msgid "Error: Config File Overwrite Failed,"
 msgstr "错误：配置文件覆写失败，"
+
+msgid "Edit"
+msgstr "编辑"

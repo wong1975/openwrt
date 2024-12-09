@@ -44,14 +44,18 @@ cat > "/lib/upgrade/keep.d/luci-app-openclash" <<-EOF
 EOF
 
 #Set Dashboard Secret
-uci -q set openclash.config.dashboard_password="$(tr -cd 'a-zA-Z0-9' </dev/urandom 2>/dev/null| head -c8 || date +%N| md5sum |head -c8)"
+if [ -z "$(uci -q get openclash.config.dashboard_password)" ]; then
+	uci -q set openclash.config.dashboard_password="$(tr -cd 'a-zA-Z0-9' </dev/urandom 2>/dev/null| head -c8 || date +%N| md5sum |head -c8)"
+fi
 
-#Set authentication
-uci_name_tmp=$(uci -q add openclash authentication)
-uci_set="uci -q set openclash.$uci_name_tmp."
-${uci_set}enabled="1"
-${uci_set}username="Clash"
-${uci_set}password="$(tr -cd 'a-zA-Z0-9' </dev/urandom 2>/dev/null| head -c8 || date +%N| md5sum |head -c8)"
+#Set Authentication
+if [ -z "$(uci -q get openclash.@authentication[0])" ]; then
+	uci_name_tmp=$(uci -q add openclash authentication)
+	uci_set="uci -q set openclash.$uci_name_tmp."
+	${uci_set}enabled="1"
+	${uci_set}username="Clash"
+	${uci_set}password="$(tr -cd 'a-zA-Z0-9' </dev/urandom 2>/dev/null| head -c8 || date +%N| md5sum |head -c8)"
+fi
 
 #Set Core Model
 source "/etc/openwrt_release"
@@ -98,6 +102,10 @@ uci -q commit openclash
 
 #Restore
 if [ -f "/tmp/openclash.bak" ]; then
+	#delete old geosite database first
+	if [ "/etc/openclash/GeoSite.dat" -nt "/tmp/openclash/GeoSite.dat" ]; then
+		rm -rf "/tmp/openclash/GeoSite.dat" >/dev/null 2>&1
+	fi
 	mv -f "/tmp/openclash.bak" "/etc/config/openclash" >/dev/null 2>&1
 	cp -rf "/tmp/openclash/." "/etc/openclash/" >/dev/null 2>&1
 	if [ -d "/tmp/openclash_dashboard/" ]; then
@@ -123,7 +131,6 @@ if [ -f "/tmp/openclash.bak" ]; then
 	rm -rf "/etc/openclash/custom/openclash_sniffing_ports_filter.yaml" >/dev/null 2>&1
 	rm -rf "/etc/openclash/custom/openclash_sniffing_port_filter.yaml" >/dev/null 2>&1
 	rm -rf "/etc/openclash/custom/openclash_sniffing_domain_filter.yaml" >/dev/null 2>&1
-	rm -rf "/etc/config/openclash.apk-new" >/dev/null 2>&1
 fi
 
 uci -q set openclash.config.enable=0
