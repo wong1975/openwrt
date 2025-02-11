@@ -120,7 +120,75 @@ Supported devices include, but are not limited to:
    make download -j$(nproc) V=s
    make -j$(nproc) V=s
    ```
+本地编译详细步骤 （仅供参考）
+首次编译固件
+git clone https://github.com/TerryLip/AX6NSS.git nss
+
+cd nss
+
+更新 Feeds
+./scripts/feeds update -a
+
+./scripts/feeds install -a
+
+删除&替换immortal面板及部分冲突默认软件
+rm -rf feeds/luci/modules/luci-base
+
+rm -rf feeds/luci/modules/luci-mod-status
+
+rm -rf feeds/packages/utils/coremark
+
+rm -rf feeds/packages/net/v2ray-geodata
+
+svn export https://github.com/immortalwrt/luci/branches/master/modules/luci-base feeds/luci/modules/luci-base
+
+svn export https://github.com/immortalwrt/luci/branches/master/modules/luci-mod-status feeds/luci/modules/luci-mod-status
+
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
+
+复制immortalwrt两项时候，如果以上命令行无法下载，可以直接git 网站下载整个luci到本地，
+
+https://github.com/immortalwrt/luci
+
+右侧代码git下载zip压缩包，然后解压复制 luci-base&luci-mod-status两个目录到本地nss文件夹对应目录即可
+
+rm -rf ./tmp
+
+./scripts/feeds update -a
+
+./scripts/feeds install -a
+
+config file
+cp AX6.config .config
+
+make menuconfig 
+保存后退出
+
+make download -j$(nproc)
+
+make -j$(nproc) || make -j1 V=s
+
+代码更新本地二次编译
+git pull
+
+rm -rf ./tmp
+
+./scripts/feeds update -a
+
+./scripts/feeds install -a
+
+make clean
+
+make menuconfig 
+保存后退出
+
+make download -j$(nproc)
+
+make -j$(nproc) || make -j1 V=s
+
 ---
+
 ### Important Note:
 
 Many users report issues after enabling Packet Steering or Flow Offloading (Software or Hardware), often because they are used to these options or they get carried over during a sysupgrade. Even if the setup seems to work initially, it is not optimized for NSS offloading, and you are losing the full benefits of hardware acceleration.
