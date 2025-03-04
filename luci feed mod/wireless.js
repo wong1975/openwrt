@@ -765,6 +765,25 @@ return view.extend({
 				])
 			];
 
+			var zones = data[4];
+			if (bss.vlan) {
+				var desc = bss.vlan.getI18n();
+				var vlan_network = bss.vlan.getNetwork();
+				var vlan_zone;
+
+				if (vlan_network && zones)
+					for (let zone of zones)
+						if (zone.getNetworks().includes(vlan_network))
+							vlan_zone = zone;
+
+				row[0].insertBefore(
+					E('div', {
+						'class' : 'zonebadge',
+						'title' : desc,
+						'style' : firewall.getZoneColorStyle(vlan_zone)
+					}, [ desc ]), row[0].firstChild);
+			}
+
 			if (bss.network.isClientDisconnectSupported()) {
 				if (table.firstElementChild.childNodes.length < 6)
 					table.firstElementChild.appendChild(E('th', { 'class': 'th cbi-section-actions'}));
@@ -803,7 +822,8 @@ return view.extend({
 		return Promise.all([
 			uci.changes(),
 			uci.load('wireless'),
-			uci.load('system')
+			uci.load('system'),
+			firewall.getZones(),
 		]);
 	},
 
@@ -823,11 +843,11 @@ return view.extend({
 		params: [ 'config', 'section', 'name' ]
 	}),
 
-	render: function() {
+	render: function(data) {
 		if (this.checkAnonymousSections())
 			return this.renderMigration();
 		else
-			return this.renderOverview();
+			return this.renderOverview(data[3]);
 	},
 
 	handleMigration: function(ev) {
@@ -862,7 +882,7 @@ return view.extend({
 		]);
 	},
 
-	renderOverview: function() {
+	renderOverview: function(zones) {
 		var m, s, o;
 
 		m = new form.Map('wireless');
@@ -1016,10 +1036,10 @@ return view.extend({
 					o.value('1', _('Normal'));
 					o.value('2', _('High'));
 					o.value('3', _('Very High'));
-
+					
 					o = ss.taboption('advanced', form.Flag, 'mu_beamformer', _('MU-MIMO'));
 					o.default = o.disabled;
-
+					
 					o = ss.taboption('advanced', form.Value, 'distance', _('Distance Optimization'), _('Distance to farthest network member in meters. Set only for distances above one kilometer; otherwise it is harmful.'));
 					o.datatype = 'or(range(0,114750),"auto")';
 					o.placeholder = 'auto';
@@ -2410,6 +2430,10 @@ return view.extend({
 							return hosts_radios_wifis;
 						});
 					}, network))
+					.then(L.bind(function(zones, data) {
+						data.push(zones);
+						return data;
+					}, network, zones))
 					.then(L.bind(this.poll_status, this, nodes));
 			}, this), 5);
 
