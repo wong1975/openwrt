@@ -2,10 +2,12 @@
 | Branch                                                                                  | mac80211 Version | Notes                                                                 |
 |-----------------------------------------------------------------------------------------|------------------|----------------------------------------------------------------------|
 | [main-nss](https://github.com/qosmio/openwrt-ipq/tree/main-nss)                 |6.12.6|Current with upstream `main` (unstable)|
-| [24.10-nss](https://github.com/qosmio/openwrt-ipq/tree/24.10-nss)               |6.11.2|Current with upstream `openwrt-24.10` (next stable release)|
-| [24.10-nss-mx4300](https://github.com/qosmio/openwrt-ipq/tree/24.10-nss-mx4300) |6.11.2|Current with upstream `openwrt-24.10` [supports Linksys MX4300](https://github.com/openwrt/openwrt/pull/16070)|
+| [24.10-nss](https://github.com/qosmio/openwrt-ipq/tree/24.10-nss)               |6.12.6|Current with upstream `openwrt-24.10` (next stable release)|
+| ~~[24.10-nss-mx4300](https://github.com/qosmio/openwrt-ipq/tree/24.10-nss-mx4300)~~ |~~6.12.6~~|~~Current with upstream `openwrt-24.10` [supports Linksys MX4300](https://github.com/openwrt/openwrt/pull/16070)~~ MX4300 is merged upstream in both main and openwrt-24.10|
 
 UPDATE: As of [2024-12-31 support for MX4300 has been merged](https://github.com/openwrt/openwrt/pull/16070) upstream in `main` branch and `main-nss-mx4300` is no longer needed.
+
+UPDATE 2: As of [2025-02-16 support for MX4300 has been merged](https://github.com/openwrt/openwrt/pull/17889) upstream in `openwrt-24.10` branch and `24.10-nss-mx4300` is no longer needed.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -120,6 +122,7 @@ Supported devices include, but are not limited to:
    make download -j$(nproc) V=s
    make -j$(nproc) V=s
    ```
+
 本地编译详细步骤 （仅供参考）
 首次编译固件
 git clone https://github.com/TerryLip/AX6NSS.git nss
@@ -188,7 +191,6 @@ make download -j$(nproc)
 make -j$(nproc) || make -j1 V=s
 
 ---
-
 ### Important Note:
 
 Many users report issues after enabling Packet Steering or Flow Offloading (Software or Hardware), often because they are used to these options or they get carried over during a sysupgrade. Even if the setup seems to work initially, it is not optimized for NSS offloading, and you are losing the full benefits of hardware acceleration.

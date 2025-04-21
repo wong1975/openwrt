@@ -23,6 +23,9 @@ boot() {
 		fw_setenv flag_ota_reboot 0
 		# Not strictly needed but useful to handle partition crash condition
 		fw_setenv flag_boot_success 1
+	netgear,wax620|\
+	netgear,wax630)
+		fw_setenv boot_count 0
 	;;
 	esac
 }
