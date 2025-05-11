@@ -27,12 +27,13 @@ case "$DISTRIB_TARGET" in
 	if ! uci -q get system.@imm_init[0].packet_steering > "/dev/null"; then
 	uci -q batch <<-EOF
 		set network.globals="globals"
-		set network.@globals[0].packet_steering="1"
+		set network.@globals[0].packet_steering="0"
 		commit network
 
-		set system.@imm_init[0].packet_steering="1"
+		set system.@imm_init[0].packet_steering="0"
 		commit system
 	EOF
+	fi
 	;;
 esac
 
