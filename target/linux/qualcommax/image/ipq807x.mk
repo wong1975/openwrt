@@ -464,6 +464,7 @@ define Device/xiaomi_ax3600
 	KERNEL_SIZE := 36608k
 	DEVICE_PACKAGES := ipq-wifi-xiaomi_ax3600 kmod-ath10k-smallbuffers ath10k-firmware-qca9887 \
 		-kmod-usb3 -kmod-usb-dwc3 -kmod-usb-dwc3-qcom
+
 ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 	ARTIFACTS := initramfs-factory.ubi
 	ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-uImage.itb | ubinize-kernel

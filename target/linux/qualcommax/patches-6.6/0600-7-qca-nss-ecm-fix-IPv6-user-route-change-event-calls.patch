@@ -15,6 +15,27 @@ Signed-off-by: Murat Sezgin <msezgin@codeaurora.org>
 
 --- a/net/ipv6/route.c
 +++ b/net/ipv6/route.c
+@@ -3913,10 +3913,6 @@ int ip6_route_add(struct fib6_config *cf
+ 		return PTR_ERR(rt);
+ 
+ 	err = __ip6_ins_rt(rt, &cfg->fc_nlinfo, extack);
+-	if (!err)
+-		atomic_notifier_call_chain(&ip6route_chain,
+-					   RTM_NEWROUTE, rt);
+-
+ 	fib6_info_release(rt);
+ 
+ 	return err;
+@@ -3938,9 +3934,6 @@ static int __ip6_del_rt(struct fib6_info
+ 	err = fib6_del(rt, info);
+ 	spin_unlock_bh(&table->tb6_lock);
+ 
+-	if (!err)
+-		atomic_notifier_call_chain(&ip6route_chain,
+-					   RTM_DELROUTE, rt);
+ out:
+ 	fib6_info_release(rt);
+ 	return err;
 @@ -4549,6 +4542,10 @@ int ipv6_route_ioctl(struct net *net, un
  		break;
  	}
