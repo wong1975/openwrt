@@ -830,14 +830,24 @@
  #endif /* _UAPI_LINUX_IN_H */
 --- a/net/netfilter/nf_conntrack_ecache.c
 +++ b/net/netfilter/nf_conntrack_ecache.c
+<<<<<<< HEAD
 @@ -343,7 +343,6 @@ void nf_conntrack_register_notifier(stru
+=======
+@@ -266,7 +266,6 @@ void nf_conntrack_register_notifier(stru
+>>>>>>> upstream/main-nss-6.6
  	mutex_lock(&nf_ct_ecache_mutex);
  	notify = rcu_dereference_protected(net->ct.nf_conntrack_event_cb,
  					   lockdep_is_held(&nf_ct_ecache_mutex));
 -	WARN_ON_ONCE(notify);
+<<<<<<< HEAD
 	if (notify != NULL) {
 		ret = -EBUSY;
 		goto out_unlock;
+=======
+ 	rcu_assign_pointer(net->ct.nf_conntrack_event_cb, new);
+ 	mutex_unlock(&nf_ct_ecache_mutex);
+ }
+>>>>>>> upstream/main-nss-6.6
 --- a/include/net/netns/conntrack.h
 +++ b/include/net/netns/conntrack.h
 @@ -26,6 +26,7 @@ struct nf_tcp_net {
