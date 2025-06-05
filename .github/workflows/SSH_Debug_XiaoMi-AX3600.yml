@@ -7,7 +7,7 @@ on:
       repo_choice:
         description: "Select source repo: openwrt or lede"
         required: true
-        default: "openwrt"
+        default: "My_OpenWrt"
         type: choice
         options:
           - openwrt
@@ -39,8 +39,10 @@ jobs:
         if [ "${{ github.event.inputs.repo_choice }}" = "lede" ]; then
           #git clone https://github.com/coolsnowwolf/lede.git source
           git clone https://github.com/immortalwrt/immortalwrt.git source
+          git clone https://github.com/wong1975/My_OpenWrt.git source
         else
-          git clone https://github.com/openwrt/openwrt.git source
+          #git clone https://github.com/openwrt/openwrt.git source
+          git clone https://github.com/wong1975/My_OpenWrt.git
         fi
 
     # SSH 远程调试（tmate），自动进入 make menuconfig
