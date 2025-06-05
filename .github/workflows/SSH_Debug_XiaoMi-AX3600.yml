@@ -5,12 +5,14 @@ on:
   workflow_dispatch:
     inputs:
       repo_choice:
-        description: "Select source repo: openwrt or lede"
+        description: "Select source repo: openwrt, My_OpenWrt, immortalwrt, or lede"
         required: true
         default: "My_OpenWrt"
         type: choice
         options:
           - openwrt
+          - My_OpenWrt
+          - immortalwrt
           - lede
       manual_config:
         description: "Manually generate XiaoMi-AX3600 config via SSH (y/n)"
@@ -34,16 +36,26 @@ jobs:
           sudo apt-get install -y python3-distutils
         fi
 
-    - name: Clone OpenWrt or LEDE source code
+    - name: Clone selected source code
       run: |
-        if [ "${{ github.event.inputs.repo_choice }}" = "lede" ]; then
-          #git clone https://github.com/coolsnowwolf/lede.git source
-          git clone https://github.com/immortalwrt/immortalwrt.git source
-          git clone https://github.com/wong1975/My_OpenWrt.git source
-        else
-          #git clone https://github.com/openwrt/openwrt.git source
-          git clone https://github.com/wong1975/My_OpenWrt.git
-        fi
+          case "${{ github.event.inputs.repo_choice }}" in
+            openwrt)
+              git clone https://github.com/openwrt/openwrt.git source
+              ;;
+            My_OpenWrt)
+              git clone https://github.com/wong1975/My_OpenWrt.git source
+              ;;
+            immortalwrt)
+              git clone https://github.com/immortalwrt/immortalwrt.git source
+              ;;
+            lede)
+              git clone https://github.com/coolsnowwolf/lede.git source
+              ;;
+            *)
+              echo "Invalid repository choice"
+              exit 1
+              ;;
+          esac
 
     # SSH 远程调试（tmate），自动进入 make menuconfig
     - name: SSH 远程调试（tmate）进入 menuconfig
